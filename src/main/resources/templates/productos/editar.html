@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!--EDITAR DE PRODUCTOS-->
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Para hacer responsivo -->
+	<title>Inicio</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+
+	<!-- Iconos de Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+	<style>
+		body,
+		html {
+			height: 100%;
+			margin: 0;
+		}
+
+		.navbar {
+			background-color: #343a40 !important;
+			text-align: center;
+		}
+
+		.navbar-brand {
+			font-family: 'Dancing Script', cursive;
+			/* Estilo manuscrito */
+			font-size: 30px;
+			text-align: center;
+			width: 100%;
+			/* Abarca todo el ancho */
+			position: absolute;
+			left: 0;
+			right: 0;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		.sidebar {
+			height: 100%;
+			width: 250px;
+			position: fixed;
+			z-index: 1;
+			top: 0;
+			left: 0;
+			background-color: #343a40;
+			overflow-x: hidden;
+			padding-top: 20px;
+		}
+
+		.sidebar a {
+			padding: 10px 15px;
+			text-decoration: none;
+			font-size: 16px;
+			color: #818181;
+			display: flex;
+			align-items: center;
+		}
+
+		.sidebar a i {
+			margin-right: 10px;
+		}
+
+		.sidebar a:hover {
+			color: #f1f1f1;
+		}
+
+		.main {
+			margin-left: 250px;
+			font-size: 22px;
+			padding: 0px 10px;
+		}
+
+		.main .content {
+			padding: 20px;
+			background: #fff;
+			margin-top: 20px;
+		}
+
+		/* Galería de imágenes */
+		.gallery {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.gallery-item {
+			margin: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			overflow: hidden;
+			width: calc(33.333% - 20px);
+		}
+
+		.gallery-item img {
+			width: 100%;
+			height: auto;
+		}
+
+		.gallery-item .caption {
+			padding: 10px;
+			text-align: center;
+		}
+
+		/* Responsivo */
+		@media (max-width: 768px) {
+			.main {
+				margin-left: 0;
+			}
+
+			.sidebar {
+				width: 100%;
+				height: auto;
+				position: relative;
+			}
+
+			.sidebar a {
+				padding: 15px;
+				text-align: center;
+				width: 100%;
+			}
+
+			.gallery-item {
+				width: calc(50% - 20px);
+			}
+		}
+
+		@media (max-width: 480px) {
+			.gallery-item {
+				width: 100%;
+			}
+		}
+
+		/*stilos para el formualario*/
+		/* Estilos para el pie de página */
+		.footer {
+			text-align: center;
+			font-size: 12px;
+			padding: 10px 0;
+			background-color: #f1f1f1;
+			color: black;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+
+		/* Estilos para la galería */
+		.gallery {
+			display: flex;
+			gap: 20px;
+		}
+
+		.gallery-item {
+			text-align: center;
+			flex: 1;
+			overflow: hidden;
+		}
+
+		.gallery-item img {
+			object-fit: cover;
+			border-radius: 10px;
+			transition: transform 0.5s ease;
+		}
+
+		.gallery-item img:hover {
+			transform: scale(1.2);
+		}
+
+		.caption {
+			margin-top: 10px;
+			font-size: 14px;
+		}
+
+		/* Ocultar secciones inicialmente */
+		#cliente-form,
+		#gallery {
+			display: none;
+		}
+
+		/* Mostrar tabla y formulario de usuarios */
+		#user-table {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="sidebar">
+		<nav class="navbar bg-light navbar-light">
+			<a></a>
+			<a href="#"><i class="fas fa-user"></i> Usuarios</a> <!--Aqui veremos si se logra enlasar-->
+			<!--<a th:href="@{/clientes/nuevo}"><i class="fas fa-users"></i> Clientes</a>-->
+
+			<a href="#"><i class="fas fa-users"></i> Clientes</a>
+			<a href="#" id="productos-link"><i class="fas fa-box"></i> Productos</a>
+			<a href="#"><i class="fas fa-shopping-cart"></i> Ventas</a>
+			<a href="#"><i class="fas fa-info-circle"></i> Información</a>
+			<a th:href="@{/login}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+		</nav>
+	</div>
+
+	<div class="main">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" th:href="@{/}" href="#">Stylo Store</a>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container my-3">
+
+			<div class="row">
+				<div class="col-md-8 mx-auto rounded border p-4 m-4">
+					<br>
+					<br>
+					<h2 class="text-center mb-5">Nuevo Producto</h2> <!--si no funciona borrar el enctype-->
+					<form method="post" enctype="multipart/form-data" th:object="${productoDTO}"
+						th:action="@{/productos/editar/{id}(id=${producto.id})}">
+						<!--agregue el th:action-->
+						<!--<div class="row mb-3">
+							<label class="col-sm-4 col-form-label">Id</label>
+							<div class="col-sm-8">
+								<input readonly class="form-control-plaintext" th:value="*{id}" />
+							</div>
+						</div>-->
+
+
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label">nombre</label>
+							<div class="col-sm-8">
+								<input class="form-control" th:field="*{nombre}" />
+								<p th:if="${#fields.hasErrors('nombre')}" th:errorclass="text-danger"
+									th:errors="*{nombre}"></p>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label">Marca</label>
+							<div class="col-sm-8">
+								<input class="form-control" th:field="*{marca}" />
+								<p th:if="${#fields.hasErrors('marca')}" th:errorclass="text-danger"
+									th:errors="*{marca}"></p>
+							</div>
+						</div>
+
+
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label">Categoria</label>
+							<div class="col-sm-8">
+								<select class="form-select" th:field="*{categoria}" style="font-size: 14px;">
+									<option value="">Seleccione una categoría</option>
+									<option value="Blusas">Blusas</option>
+									<option value="Pantalon">Pantalón</option>
+									<option value="Accesorios">Accesorios</option>
+									<option value="Zapatos">Zapatos</option>
+								</select>
+								<p th:if="${#fields.hasErrors('categoria')}" th:errorclass="text-danger"
+									th:errors="*{categoria}"></p>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label">Precio</label>
+							<div class="col-sm-8">
+								<input class="form-control" type="number" step="0.01" min="0" th:field="*{precio}" />
+								<p th:if="${#fields.hasErrors('precio')}" th:errorclass="text-danger"
+									th:errors="*{precio}"></p>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label">Descripcion</label>
+							<div class="col-sm-8">
+								<input class="form-control" th:field="*{descripcion}" />
+								<p th:if="${#fields.hasErrors('descripcion')}" th:errorclass="text-danger"
+									th:errors="*{descripcion}"></p>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<label class="col-sm-4 col-form-label">Color</label>
+							<div class="col-sm-8">
+								<input class="form-control" th:field="*{color}" />
+								<p th:if="${#fields.hasErrors('color')}" th:errorclass="text-danger"
+									th:errors="*{color}"></p>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="offset-sm-4 col-sm-8">
+								<img th:src="@{'/imagenesR/' + *{imagenNombre}}" alt="..." width="150">
+							</div>
+						</div>
+
+
+
+						<div class="row mb-3">
+    <label class="col-sm-4 col-form-label">Imagen</label>
+    <div class="col-sm-8">
+        <input class="form-control" type="file" th:field="*{imagenNombre}" accept="image/*" onchange="previewImage(event)" />
+        <p th:if="${#fields.hasErrors('imagenNombre')}" th:errorclass="text-danger" th:errors="*{imagenNombre}"></p>
+        
+        <!-- Elemento para mostrar la vista previa de la imagen -->
+        <div class="mt-2">
+            <img id="imagePreview" src="#" alt="Vista previa de la imagen" style="display: none; max-width: 100%; height: auto;" />
+        </div>
+    </div>
+</div>
+
+						<!--BOTONES-->
+						<div class="row">
+							<div class="offset-sm-4 col-sm-4 d-grid">
+								<button type="submit" class="btn btn-primary">Guardar</button>
+							</div>
+							<div class="col-sm-4 d-grid">
+								<a class="btn btn-danger btn-sm" th:href="@{/productos}">Cancelar</a>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+
+		</div>
+
+
+
+
+		<style>
+			/* Estilos para la galería */
+			.gallery {
+				display: flex;
+				gap: 20px;
+				/* Espacio entre las imágenes */
+			}
+
+			.gallery-item {
+				text-align: center;
+				flex: 1;
+				overflow: hidden;
+				/* Evitar que la imagen se salga del contenedor al hacer zoom */
+			}
+
+			.gallery-item img {
+
+				object-fit: cover;
+				/* Ajusta la imagen para llenar el contenedor sin deformarla */
+				border-radius: 10px;
+				/* Bordes redondeados */
+				transition: transform 0.5s ease;
+				/* Suaviza la transición del zoom */
+			}
+
+			.gallery-item img:hover {
+				transform: scale(1.2);
+				/* Aplica zoom al pasar el cursor, 1.2 es 120% del tamaño original */
+			}
+
+			.caption {
+				margin-top: 10px;
+				font-size: 14px;
+			}
+		</style>
+
+		<style>
+			/*esto es para el pie de pagina*/
+			.footer {
+				text-align: center;
+				/* Centrar el texto */
+				font-size: 12px;
+				/* Tamaño de fuente más pequeño */
+				padding: 10px 0;
+				/* Espaciado arriba y abajo */
+				background-color: #f1f1f1;
+				/* Color de fondo */
+				color: black;
+				/* Color del texto */
+				position: fixed;
+				/* Fijar el pie de página */
+				bottom: 0;
+				/* Alinear al fondo */
+				left: 0;
+				/* Alinear a la izquierda */
+				right: 0;
+				/* Alinear a la derecha */
+			}
+		</style>
+
+
+		<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const userLink = document.querySelector('.sidebar a[href="#"]'); // Seleccionar el enlace de Usuarios
+        const gallerySection = document.getElementById('gallery');
+        const userTableSection = document.getElementById('user-table');
+
+        // Agregar evento click al enlace de usuarios
+        userLink.addEventListener('click', function (event) {
+            event.preventDefault(); // Evita el comportamiento predeterminado del enlace
+
+            // Ocultar galería de productos
+            gallerySection.style.display = 'none';
+            // Mostrar tabla de usuarios
+            userTableSection.style.display = 'block';
+        });
+    });
+
+    // Función para mostrar vista previa de la imagen
+    function previewImage(event) {
+        const imagePreview = document.getElementById('imagePreview');
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block'; // Muestra la imagen
+            }
+            reader.readAsDataURL(file);
+        } else {
+            imagePreview.src = "#";
+            imagePreview.style.display = 'none'; // Oculta la imagen si no hay archivo
+        }
+    }
+</script>
+
+	</div>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+
+</body>
+
+</html>

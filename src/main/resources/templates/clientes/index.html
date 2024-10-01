@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!-- index DE CLIENTES -->
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Para hacer responsivo -->
+	<title>Inicio</title>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+
+	<!-- Iconos de Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+	<style>
+		/* Estilos globales */
+		body,
+		html {
+			height: 100%;
+			margin: 0;
+		}
+
+		/* Estilos de la barra lateral */
+		.sidebar {
+			height: 100%;
+			width: 250px;
+			position: fixed;
+			background-color: #343a40;
+			padding-top: 20px;
+		}
+
+		.sidebar a {
+			padding: 10px 15px;
+			text-decoration: none;
+			font-size: 16px;
+			color: #818181;
+			display: flex;
+			align-items: center;
+		}
+
+		.sidebar a i {
+			margin-right: 10px;
+		}
+
+		.sidebar a:hover {
+			color: #f1f1f1;
+		}
+
+		/* Estilos de la barra de navegación superior */
+		.navbar {
+			background-color: #343a40 !important;
+		}
+
+		.navbar-brand {
+			font-family: 'Dancing Script', cursive;
+			font-size: 30px;
+			position: absolute;
+			left: 0;
+			right: 0;
+			margin-left: auto;
+			margin-right: auto;
+			text-align: center;
+		}
+
+		/* Estilos principales de la página */
+		.main {
+			margin-left: 250px;
+			/* Mantener margen para la barra lateral */
+			padding: 20px;
+			margin-top: 40px;
+			/* Ajustar margen superior para evitar que la barra de navegación se superponga */
+		}
+
+		.main .content {
+			padding: 20px;
+			background: #fff;
+			margin-top: 20px;
+		}
+
+		/* Estilos de la tabla */
+		table {
+			margin-top: 20px;
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		table th,
+		table td {
+			text-align: left;
+			padding: 10px;
+		}
+
+		table thead th {
+			background-color: #343a40;
+			color: white;
+		}
+
+		/* Estilos de botones */
+		.btn-primary {
+			background-color: #007bff;
+			border-color: #007bff;
+			transition: background-color 0.3s ease;
+		}
+
+		.btn-primary:hover {
+			background-color: #0056b3;
+			border-color: #0056b3;
+		}
+
+		.btn-outline-primary {
+			border-color: #007bff;
+			color: #007bff;
+			transition: background-color 0.3s ease, color 0.3s ease;
+		}
+
+		.btn-outline-primary:hover {
+			background-color: #007bff;
+			color: #fff;
+		}
+
+		/* Estilos de la galería */
+		.gallery {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.gallery-item {
+			margin: 10px;
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			overflow: hidden;
+			width: calc(33.333% - 20px);
+		}
+
+		.gallery-item img {
+			width: 100%;
+			height: auto;
+		}
+
+		.gallery-item .caption {
+			padding: 10px;
+			text-align: center;
+		}
+
+		/* Estilos responsivos */
+		@media (max-width: 768px) {
+			.main {
+				margin-left: 0;
+			}
+
+			.sidebar {
+				width: 100%;
+				height: auto;
+				position: relative;
+			}
+
+			.sidebar a {
+				padding: 15px;
+				text-align: center;
+				width: 100%;
+			}
+
+			.gallery-item {
+				width: calc(50% - 20px);
+			}
+		}
+
+		@media (max-width: 480px) {
+			.gallery-item {
+				width: 100%;
+			}
+		}
+
+		/* Estilos para el pie de página */
+		.footer {
+			text-align: center;
+			font-size: 12px;
+			padding: 10px 0;
+			background-color: #f1f1f1;
+			color: black;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Barra lateral -->
+	<div class="sidebar">
+		<nav class="navbar bg-light navbar-light">
+			<a href="#"><i class="fas fa-user"></i> Usuarios</a>
+			<a th:href="@{/clientes}"><i class="fas fa-users"></i> Clientes</a>
+			<a href="#"><i class="fas fa-box"></i> Productos</a>
+			<a href="#"><i class="fas fa-shopping-cart"></i> Ventas</a>
+			<a href="#"><i class="fas fa-info-circle"></i> Información</a>
+			<a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+		</nav>
+	</div>
+
+	<!-- Contenido principal -->
+	<div class="main">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" th:href="@{/}" href="#">Stylo Store</a>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<h1 class="text-center mb-3">Lista de Clientes</h1>
+			<a class="btn btn-primary" th:href="@{/clientes/crear}">Nuevo Cliente</a>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>Direccion</th>
+						<th>Email</th>
+						<th>Telefono</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody class="table-group-divider">
+					<tr th:each="cliente : ${cliente}">
+						<td th:text="${cliente.id}"></td>
+						<td th:text="${cliente.nombre}"></td>
+						<td th:text="${cliente.apellido}"></td>
+						<td th:text="${cliente.direccion}"></td>
+						<td th:text="${cliente.email}"></td>
+						<td th:text="${cliente.telefono}"></td>
+						<td style="white-space: nowrap;">
+							<a class="btn btn-primary btn-sm" th:href="@{/clientes/editar/{id}(id=${cliente.id})}">
+								Editar</a>
+							<a class="btn btn-danger btn-sm" th:href="@{/clientes/eliminar(id=${cliente.id})}"
+								onclick="return confirm('Are you sure?')">Eliminar</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<!-- Scripts -->
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			const userLink = document.querySelector('.sidebar a[href="#"]');
+			const gallerySection = document.getElementById('gallery');
+			const userTableSection = document.getElementById('user-table');
+
+			userLink.addEventListener('click', function (event) {
+				event.preventDefault();
+				gallerySection.style.display = 'none';
+				userTableSection.style.display = 'block';
+			});
+		});
+	</script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+		crossorigin="anonymous"></script>
+</body>
+
+</html>

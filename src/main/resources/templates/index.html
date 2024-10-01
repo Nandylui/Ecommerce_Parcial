@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">  <!--INDEX PRINCIPAL-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Para hacer responsivo -->
+    <title>Inicio</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    
+    <!-- Iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .navbar {
+            background-color: #343a40 !important;
+            text-align: center;
+        }
+
+        .navbar-brand {
+            font-family: 'Dancing Script', cursive; /* Estilo manuscrito */
+            font-size: 30px;
+            text-align: center;
+            width: 100%; /* Abarca todo el ancho */
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            color: #818181;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .main {
+            margin-left: 250px;
+            font-size: 22px;
+            padding: 0px 10px;
+        }
+
+        .content {
+            padding: 20px;
+            background: #fff;
+            margin-top: 20px;
+        }
+
+        /* Galería de imágenes */
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px; /* Espacio entre las imágenes */
+        }
+
+        .gallery-item {
+            text-align: center;
+            flex: 1;
+            overflow: hidden; /* Evitar que la imagen se salga del contenedor al hacer zoom */
+        }
+
+        .gallery-item img {
+            object-fit: cover; /* Ajusta la imagen para llenar el contenedor sin deformarla */
+            border-radius: 10px; /* Bordes redondeados */
+            transition: transform 0.5s ease; /* Suaviza la transición del zoom */
+            width: 100%;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.2); /* Aplica zoom al pasar el cursor */
+        }
+
+        .caption {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Estilo del pie de página */
+        .footer {
+            text-align: center; /* Centrar el texto */
+            font-size: 12px; /* Tamaño de fuente más pequeño */
+            padding: 10px 0; /* Espaciado arriba y abajo */
+            background-color: #f1f1f1; /* Color de fondo */
+            color: black; /* Color del texto */
+            position: fixed; /* Fijar el pie de página */
+            bottom: 0; /* Alinear al fondo */
+            left: 0; /* Alinear a la izquierda */
+            right: 0; /* Alinear a la derecha */
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .main {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .sidebar a {
+                padding: 15px;
+                text-align: center;
+                width: 100%;
+            }
+
+            .gallery-item {
+                width: calc(50% - 20px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-item {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <nav class="navbar bg-light navbar-light">
+            <a></a>
+            <a href="#"><i class="fas fa-user"></i> Usuarios</a>
+            <a th:href="@{/clientes}"><i class="fas fa-users"></i> Clientes</a>
+            <a th:href="@{/productos}"><i class="fas fa-box"></i> Productos</a>
+            <a href="#"><i class="fas fa-shopping-cart"></i> Ventas</a>
+            <a href="#"><i class="fas fa-info-circle"></i> Información</a>
+            <a th:href="@{/login}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+        </nav>
+    </div>
+
+    <div class="main">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" th:href="@{/}" href="#">Stylo Store</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="content">
+            <h1>Stylo Store - Galería de Productos</h1>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://tissini.com/blog/wp-content/uploads/2022/07/vestidos-de-verano-para-mujer-disenos-en-tendencia.jpg" alt="Producto 1">
+                    <div class="caption">
+                        <strong>Vestidos Temporada Verano</strong><br>
+                        Estos son vestidos elegantes para verano, perfecto para cualquier esta temporada. Disponible en varias tallas y colores.
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://i.ebayimg.com/thumbs/images/g/0fkAAOSwAsxjKopR/s-l1200.jpg" alt="Producto 2">
+                    <div class="caption">
+                        <strong>Zapatos para ellas</strong><br>
+                        Hermosos par de tenis, diseñados para combinar estilo y comodidad, disponibles en todas las tallas.
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://img4.dhresource.com/webp/m/0x0/f3/albu/km/j/29/8817d774-0738-488b-ab9e-cfa6a0228351.jpg" alt="Producto 3">
+                    <div class="caption">
+                        <strong>Accesorios para dama</strong><br>
+                        Un bolso de mano de alta calidad, ideal para el día a día o para ocasiones especiales, en diferentes colores.
+                    </div>
+                </div>
+            </div>
+            <div class="footer">Stylo Store - @Derechos Reservados 2024</div>
+        </div>
+
+        <div id="user-table" class="table-section" style="display: none;">
+            <h1>Registro de Usuario</h1>
+            <div class="table-container">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="usuario: ${usuarios}">
+                            <td th:text="${usuario.id}">ID</td>
+                            <td th:text="${usuario.nombre}">Nombre</td>
+                            <td th:text="${usuario.email}">Email</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const userLink = document.querySelector('.sidebar a[href="#"]'); // Seleccionar el enlace de Usuarios
+            const gallerySection = document.querySelector('.gallery');
+            const userTableSection = document.getElementById('user-table');
+
+            userLink.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevenir el comportamiento por defecto del enlace
+                gallerySection.style.display = 'none'; // Ocultar la galería
+                userTableSection.style.display = 'block'; // Mostrar la tabla de usuarios
+            });
+        });
+    </script>
+</body>
+
+</html>

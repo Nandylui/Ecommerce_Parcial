@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!--INDEX DE PRODUCTOS-->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+
+    <!-- Iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Estilos de la barra lateral */
+        .sidebar {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            background-color: #343a40;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            color: #818181;
+            display: flex;
+            align-items: center;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        /* Estilos de la barra de navegación superior */
+        .navbar {
+            background-color: #343a40 !important;
+        }
+
+        .navbar-brand {
+            font-family: 'Dancing Script', cursive;
+            font-size: 30px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        /* Estilos principales de la página */
+        .main {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .main .content {
+            padding: 20px;
+            background: #fff;
+            margin-top: 20px;
+        }
+
+        /* Estilos de la tabla */
+        table {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            text-align: left;
+            padding: 10px;
+        }
+
+        table thead th {
+            background-color: #343a40;
+            color: white;
+        }
+
+        /* Estilos de botones */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-outline-primary {
+            border-color: #007bff;
+            color: #007bff;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Imagen en la tabla */
+        td img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <nav>
+            <a href="#"><i class="fas fa-user"></i> Usuarios</a>
+            <a href="#"><i class="fas fa-users"></i> Clientes</a>
+            <a th:href="@{/productos}"><i class="fas fa-box"></i> Productos</a>
+            <a href="#"><i class="fas fa-shopping-cart"></i> Ventas</a>
+            <a href="#"><i class="fas fa-info-circle"></i> Información</a>
+            <a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+        </nav>
+    </div>
+
+    <div class="main">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" th:href="@{/}">Stylo Store</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container content">
+            <h1 class="text-center">Lista de Productos</h1>
+            <a class="btn btn-primary" th:href="@{/productos/crear}">Nuevo Producto</a>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Descripción</th>
+                        <th>Color</th>
+                        <th>Imagen</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr th:each="producto : ${producto}">
+                        <td th:text="${producto.id}"></td>
+                        <td th:text="${producto.nombre}"></td>
+                        <td th:text="${producto.marca}"></td>
+                        <td th:text="${producto.categoria}"></td>
+                        <td th:text="@{${producto.precio} + '$'}"></td>
+                        <td th:text="${producto.descripcion}"></td>
+                        <td th:text="${producto.color}"></td>
+                        <td><img th:src="@{'/imagenesR/' + ${producto.imagenNombre}}" alt="Imagen de producto"></td>
+                        <td style="white-space:nowrap">
+                            <a class="btn btn-primary btn-sm" th:href="@{/productos/editar(id=${producto.id})}">Editar</a>
+                            <a class="btn btn-danger btn-sm" th:href="@{/productos/eliminar(id=${producto.id})}"
+                                onclick="return confirm('¿Estás seguro?')">Eliminar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
